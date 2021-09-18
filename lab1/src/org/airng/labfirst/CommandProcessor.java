@@ -12,26 +12,29 @@ public class CommandProcessor {
   /*
    *    Can process 3 different commands:
    *   for double, two doubles, and string.
-   *
-   *   process() automatically determines which command to execute.
    */
-  private static final Pattern doublePattern = Pattern.compile("[-+]?[0-9]*\\.?[0-9]+([eE][-+]?[0-9]+)?");
-  private static final Pattern twoDoublesPattern = Pattern.compile("^([0-9]+[a-zA-Z0-9]*\\.?[a-zA-Z0-9]* *){2}$");
-  // allows non-numeric characters which are going to be filtered out.
+  private static final Pattern doublePattern = Pattern.compile("^[-+]?[0-9]*\\.?[0-9]+$");
+  private static final Pattern twoDoublesPattern = Pattern.compile("^([-+]?[0-9]*\\.?[0-9]+ ?){2}.*$");
 
-  public static void process(String cmd) {
+  public void process(String cmd) {
+    /*
+     *   determines automatically which command to execute.
+     */
     Matcher doubleMatcher = doublePattern.matcher(cmd);
     Matcher twoDoublesMatcher = twoDoublesPattern.matcher(cmd);
     if (doubleMatcher.matches()) {
-      CommandProcessor.processNumber(cmd);
+      CommandProcessor.sqrAndCbrtNumber(cmd);
     } else if (twoDoublesMatcher.matches()) {
       CommandProcessor.processTwoNums(cmd);
     } else {
-      CommandProcessor.processString(cmd);
+      CommandProcessor.countSortString(cmd);
     }
   }
 
-  private static void processNumber(String input) {
+  private static void sqrAndCbrtNumber(String input) {
+    /*
+     *    prints sqr(x) and cbrt(sqr(x))
+     */
     double num = Double.parseDouble(input);
     num = Math.pow(num, 2);
     System.out.printf("Square: %.3f\n", num);
@@ -40,19 +43,17 @@ public class CommandProcessor {
   }
 
   private static void processTwoNums(String input) {
-    StringBuilder filtered = new StringBuilder();
-    for (char letter: input.toCharArray()) {
-      if ('0' <= letter && letter <= '9' || letter == '.' || letter == ' ' || letter == '\t')
-        filtered.append(letter);
-    }
-    Matcher matcher = doublePattern.matcher(filtered);
+    /*
+     *    parses two nums a,b and prints a/b
+     */
+    Matcher matcher = doublePattern.matcher(input);
     if (!matcher.find()) {
-      processString(input);
+      countSortString(input);
       return;
     }
     double num1 = Double.parseDouble(matcher.group());
     if (!matcher.find()) {
-      processString(input);
+      countSortString(input);
       return;
     }
     double num2 = Double.parseDouble(matcher.group());
@@ -64,24 +65,25 @@ public class CommandProcessor {
     System.out.printf("Division: %.3f\n", result);
   }
 
-  private static void processString(String input) {
+  private static void countSortString(String input) {
     char[] charArray = input.toCharArray();
     Map<Character, Integer> inputHashMap = new HashMap<>();
     StringBuilder sortedString = new StringBuilder();
-    for (char key: charArray) {
+    for (char key : charArray) {
       if (inputHashMap.containsKey(key)) {
         int count = inputHashMap.get(key);
-        inputHashMap.put(key, count+1);
+        inputHashMap.put(key, count + 1);
       } else {
         inputHashMap.put(key, 1);
       }
     }
-    TreeMap<Character, Integer> sortedMap = new TreeMap<>(inputHashMap);
-    for (Entry<Character, Integer> entry: sortedMap.entrySet()) {
+    Map<Character, Integer> sortedMap = new TreeMap<>(inputHashMap);
+    for (Entry<Character, Integer> entry : sortedMap.entrySet()) {
       sortedString.append(String.valueOf(entry.getKey()).repeat(entry.getValue()));
       System.out.printf("'%c': %d\n", entry.getKey(), entry.getValue());
     }
     System.out.println(sortedString);
+    System.out.println("Unique keys count: " + sortedMap.keySet().size());
   }
 
 }
