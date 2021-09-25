@@ -47,15 +47,9 @@ public class CommandProcessor {
      *    parses two nums a,b and prints a/b
      */
     Matcher matcher = doublePattern.matcher(input);
-    if (!matcher.find()) {
-      countSortString(input);
-      return;
-    }
+    if (!matcher.find()) return;
     double num1 = Double.parseDouble(matcher.group());
-    if (!matcher.find()) {
-      countSortString(input);
-      return;
-    }
+    if (!matcher.find()) return;
     double num2 = Double.parseDouble(matcher.group());
     if (num2 == 0.0) {
       System.out.println("Can't divide by zero");
