@@ -23,26 +23,25 @@ public class CommandProcessor {
     Matcher doubleMatcher = doublePattern.matcher(cmd);
     Matcher twoDoublesMatcher = twoDoublesPattern.matcher(cmd);
     if (doubleMatcher.matches()) {
-      CommandProcessor.sqrAndCbrtNumber(cmd);
+      sqrAndCbrtNumber(cmd);
     } else if (twoDoublesMatcher.matches()) {
-      CommandProcessor.processTwoNums(cmd);
+      processTwoNums(cmd);
     } else {
-      CommandProcessor.countSortString(cmd);
+      countSortString(cmd);
     }
   }
 
-  private static void sqrAndCbrtNumber(String input) {
+  private void sqrAndCbrtNumber(String input) {
     /*
      *    prints sqr(x) and cbrt(sqr(x))
      */
-    double num = Double.parseDouble(input);
-    num = Math.pow(num, 2);
-    System.out.printf("Square: %.3f\n", num);
-    num = Math.cbrt(num);
-    System.out.printf("Cubic root of square: %.3f\n", num);
+    final double num = Double.parseDouble(input);
+    double square = Math.pow(num, 2);
+    System.out.printf("Square: %.3f\n", square);
+    System.out.printf("Cubic root of square: %.3f\n", Math.cbrt(square));
   }
 
-  private static void processTwoNums(String input) {
+  private void processTwoNums(String input) {
     /*
      *    parses two nums a,b and prints a/b
      */
@@ -59,7 +58,7 @@ public class CommandProcessor {
     System.out.printf("Division: %.3f\n", result);
   }
 
-  private static void countSortString(String input) {
+  private void countSortString(String input) {
     char[] charArray = input.toCharArray();
     Map<Character, Integer> inputHashMap = new HashMap<>();
     StringBuilder sortedString = new StringBuilder();
