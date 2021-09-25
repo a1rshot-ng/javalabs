@@ -1,4 +1,4 @@
-package org.airng.labsecond;
+package org.airng.labsecond.base;
 
 public enum Subject {
   PHYSICS,

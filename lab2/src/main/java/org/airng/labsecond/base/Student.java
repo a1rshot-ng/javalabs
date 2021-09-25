@@ -1,25 +1,32 @@
-package org.airng.labsecond;
+package org.airng.labsecond.base;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class Student extends Person {
-  private final ArrayList<Subject> subjects;
-  private final Map<Subject, Double> marks;
+  public List<Subject> subjects;
+  public Map<Subject, Double> marks;
 
-  Student(String fullName, Date birthDate, String phoneNumber, ArrayList<Subject> subjects, Map<Subject, Double> marks) {
+  public Student(String fullName, Date birthDate, String phoneNumber, List<Subject> subjects, Map<Subject, Double> marks) {
     super(fullName, birthDate, phoneNumber);
     this.subjects = subjects;
     this.marks = marks;
   }
 
-  public ArrayList<Subject> getSubjects() {
-    return this.subjects;
+  public Student() {
+    super();
   }
 
-  public Map<Subject, Double> getMarks() {
-    return this.marks;
+  @Override
+  public void printInfo() {
+    super.printInfo();
+    System.out.println("Role:   Student");
+    System.out.println("Subjects:");
+    for (Subject subject: this.subjects)
+      System.out.printf("    %s\n", subject.toString());
+    System.out.println("Marks:");
+    for (Map.Entry<Subject, Double> entry: this.marks.entrySet())
+      System.out.printf("    %s:  %.2f\n", entry.getKey().toString(), entry.getValue());
   }
-
 }

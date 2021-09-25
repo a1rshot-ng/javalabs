@@ -1,6 +1,6 @@
 package org.airng.labsecond.service;
 
-public enum Command {
+public enum Action {
   ADD,
   GET,
   UPDATE,

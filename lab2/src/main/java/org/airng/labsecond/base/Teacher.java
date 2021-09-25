@@ -1,22 +1,26 @@
-package org.airng.labsecond;
+package org.airng.labsecond.base;
 
 import java.util.Date;
 
 public class Teacher extends Person {
-  private final String subject, workTime;
+  public Subject subject;
+  public String workTime;
 
-  Teacher(String fullName, Date birthDate, String phoneNumber, String subject, String workTime) {
+  public Teacher(String fullName, Date birthDate, String phoneNumber, Subject subject, String workTime) {
     super(fullName, birthDate, phoneNumber);
     this.subject = subject;
     this.workTime = workTime;
   }
 
-  public String getSubject() {
-    return this.subject;
+  public Teacher() {
+    super();
   }
 
-  public String getWorkTime() {
-    return this.workTime;
+  @Override
+  public void printInfo() {
+    super.printInfo();
+    System.out.println("Role:   Teacher");
+    System.out.println("Subject:  " + this.subject.toString());
+    System.out.println("Worktime: " + this.workTime);
   }
-
 }
