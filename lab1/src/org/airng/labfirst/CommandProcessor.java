@@ -13,8 +13,8 @@ public class CommandProcessor {
    *    Can process 3 different commands:
    *   for double, two doubles, and string.
    */
-  private static final Pattern doublePattern = Pattern.compile("^[-+]?[0-9]*\\.?[0-9]+$");
-  private static final Pattern twoDoublesPattern = Pattern.compile("^([-+]?[0-9]*\\.?[0-9]+ ?){2}.*$");
+  private static final Pattern doublePattern = Pattern.compile("[-+]?[0-9]*\\.?[0-9]+");
+  private static final Pattern twoDoublesPattern = Pattern.compile("^[-+]?[0-9]*\\.?[0-9]+ [-+]?[0-9]*\\.?[0-9]+.*$");
 
   public void process(String cmd) {
     /*
