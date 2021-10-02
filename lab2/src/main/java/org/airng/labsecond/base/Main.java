@@ -1,6 +1,6 @@
 package org.airng.labsecond.base;
 
-import org.airng.labsecond.service.PeopleController;
+import org.airng.labsecond.service.PeopleControlLauncher;
 import org.airng.labsecond.service.PeopleService;
 
 public class Main {
@@ -9,10 +9,10 @@ public class Main {
 
   public static void main(String[] args) {
     PeopleService peopleService;
-    PeopleController peopleController;
+    PeopleControlLauncher peopleControlLauncher;
     try {
       peopleService = new PeopleService(peopleFolder);
-      peopleController = new PeopleController(cmdFolder, peopleService);
+      peopleControlLauncher = new PeopleControlLauncher(cmdFolder, peopleService);
     } catch (NullPointerException e) {
       System.err.println("Could not initialize services as " + peopleFolder + " or " + cmdFolder + " is unreachable");
       return;
@@ -20,6 +20,6 @@ public class Main {
     CommandLineExec commandLineExec = new CommandLineExec(peopleService, cmdFolder);
 
     commandLineExec.interactive();
-    peopleController.stopServices();
+    peopleControlLauncher.stopServices();
   }
 }

@@ -1,17 +1,19 @@
 package org.airng.labsecond.service;
 
+import org.airng.labsecond.base.Person;
+import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
 
-public class CommandChecker extends Thread {
-  private final PeopleController peopleController;
+public class CommandController extends Thread {
+  private final PeopleControlLauncher peopleControlLauncher;
   private final File cmdFolder;
   public volatile boolean stop = false;
 
-  public CommandChecker(PeopleController peopleController, File cmdFolder) {
-    this.peopleController = peopleController;
+  public CommandController(PeopleControlLauncher peopleControlLauncher, File cmdFolder) {
+    this.peopleControlLauncher = peopleControlLauncher;
     this.cmdFolder = cmdFolder;
   }
 
@@ -26,13 +28,14 @@ public class CommandChecker extends Thread {
         if (cmdFiles != null && cmdFiles.length != 0) {
           for (File fileEntry: cmdFiles) {
             Command cmd = objectMapper.readValue(fileEntry, Command.class);
-            peopleController.addCmd(cmd);
+            peopleControlLauncher.addCmd(cmd);
             if (!fileEntry.delete()) throw new IOException();
           }
         }
 
       } catch (IOException|NullPointerException e) {
-        System.err.println("Could not process command in recent file");
+        System.err.println("Controller: could not process command in recent file: " + e);
+        e.printStackTrace(System.err);
       } catch (InterruptedException e) {
         return;
       }

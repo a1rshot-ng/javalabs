@@ -65,20 +65,20 @@ public class PeopleService {
   }
 
   public int updatePerson(Command cmd) {
-    Person person = this.getPerson(cmd.id);
+    Person person = this.getPerson(cmd.getId());
     if (person == null) {
-      System.err.println("Could not find person record #" + cmd.id);
+      System.err.println("Could not find person record #" + cmd.getId());
       return 0;
     }
     if (person instanceof Teacher) {
-      if (cmd.teacherSubject != null) ((Teacher) person).subject = cmd.teacherSubject;
-      if (cmd.teacherWorkTime != null) ((Teacher) person).workTime = cmd.teacherWorkTime;
+      if (cmd.getTeacherSubject() != null) ((Teacher) person).subject = cmd.getTeacherSubject();
+      if (cmd.getTeacherWorkTime() != null) ((Teacher) person).workTime = cmd.getTeacherWorkTime();
     } else if (person instanceof Student) {
-      if (cmd.studentSubjects != null) ((Student) person).subjects = cmd.studentSubjects;
-      if (cmd.studentMarks != null) {
+      if (cmd.getStudentSubjects() != null) ((Student) person).subjects = cmd.getStudentSubjects();
+      if (cmd.getStudentMarks() != null) {
         Double mark;
         for (Subject subject: ((Student) person).subjects)
-          if ((mark = cmd.studentMarks.get(subject)) != null)
+          if ((mark = cmd.getStudentMarks().get(subject)) != null)
             ((Student) person).marks.put(subject, mark);
       }
     } else throw new RuntimeException();
@@ -87,7 +87,7 @@ public class PeopleService {
       peopleDao.save(person);
       return id;
     } catch (IOException e) {
-      System.err.printf("Could not update person record #%d\n", cmd.id);
+      System.err.printf("Could not update person record #%d\n", cmd.getId());
       return 0;
     }
   }

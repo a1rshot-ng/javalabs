@@ -21,6 +21,7 @@ public class PeopleDao implements Dao<Person> {
   @Override
   public Optional<Person> get(int id) {
     try {
+      @MyAnnotation
       File file = new File(folder.getPath() + "/" + id);
       return Optional.ofNullable(this.readFromFile(file));
     } catch (IOException e) {
