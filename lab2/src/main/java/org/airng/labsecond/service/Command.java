@@ -5,6 +5,7 @@ import org.airng.labsecond.base.Subject;
 import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +37,8 @@ public class Command {
     this.fullName = fullName;
     this.birthDate = birthDate;
     this.phoneNumber = phoneNumber;
-    this.studentSubjects = studentSubjects;
-    this.studentMarks = studentMarks;
+    this.studentSubjects = studentSubjects == null ? null : Collections.unmodifiableList(studentSubjects);
+    this.studentMarks = studentMarks == null ? null : Collections.unmodifiableMap(studentMarks);
     this.teacherSubject = teacherSubject;
     this.teacherWorkTime = teacherWorkTime;
   }

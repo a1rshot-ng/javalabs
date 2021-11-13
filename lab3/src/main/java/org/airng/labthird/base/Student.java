@@ -1,4 +1,4 @@
-package org.airng.labsecond.base;
+package org.airng.labthird.base;
 
 import java.util.Date;
 import java.util.List;
